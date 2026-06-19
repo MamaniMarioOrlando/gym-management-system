@@ -1,21 +1,31 @@
 spring:
   application:
     name: gym-access-control
+  
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/gym_db}
-    username: ${DATABASE_USERNAME:postgres}
-    password: ${DATABASE_PASSWORD:admin}
+    url: jdbc:postgresql://localhost:5432/gym_access_db
+    username: gym_admin
+    password: gym_password123
+    driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: validate # Flyway manejara el DDL, no Hibernate
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
   flyway:
     enabled: true
-    baseline-on-migrate: true
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
 
-jwt:
-  secret: ${JWT_SECRET:super-secret-key-that-should-be-changed-in-production-and-be-at-least-256-bits-long}
-  expiration: 86400000 # 24 hours
+# Configuración de Swagger
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
