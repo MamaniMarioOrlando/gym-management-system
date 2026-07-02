@@ -23,6 +23,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = true) // Nullable for members who might just use fingerprints
+    private String password;
+
     // We store the biometric hash/id provided by the scanner
     @Column(name = "biometric_id", unique = true)
     private String biometricId;
