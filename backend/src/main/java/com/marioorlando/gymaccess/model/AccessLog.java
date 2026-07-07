@@ -2,8 +2,9 @@ package com.marioorlando.gymaccess.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "access_logs")
@@ -15,20 +16,26 @@ import java.util.UUID;
 public class AccessLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "access_time", nullable = false)
-    private LocalDateTime accessTime;
+    @Column(name = "scanned_identifier", nullable = false, length = 50)
+    private String scannedIdentifier;
 
-    @Column(name = "granted", nullable = false)
-    private boolean granted;
+    @Column(name = "access_granted", nullable = false)
+    private boolean accessGranted;
 
-    // "MEMBERSHIP_EXPIRED", "UNRECOGNIZED_FINGERPRINT", "SUCCESS"
-    @Column(name = "reason")
-    private String reason; 
+    @Column(name = "rejection_reason")
+    private String rejectionReason;
+
+    @CreationTimestamp
+    @Column(name = "scanned_at", updatable = false)
+    private LocalDateTime scannedAt;
+
+    @Column(length = 20)
+    private String method; // e.g. "KIOSK", "FINGERPRINT"
 }
