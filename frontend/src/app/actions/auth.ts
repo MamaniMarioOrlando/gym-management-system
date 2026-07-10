@@ -50,3 +50,9 @@ export async function loginAction(prevState: { error: string | null }, formData:
   // Redirigir siempre fuera del bloque try/catch
   redirect('/reception');
 }
+
+export async function logoutAction() {
+  const cookieStore = await cookies();
+  cookieStore.delete('gym_session');
+  redirect('/login');
+}

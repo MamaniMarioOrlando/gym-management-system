@@ -7,9 +7,9 @@ ALTER TABLE users ADD COLUMN fingerprint_hash VARCHAR(255);
 ALTER TABLE users ADD COLUMN phone VARCHAR(20);
 
 -- Para no romper la base de datos si hay multiples usuarios sin DNI, y no violar la restricción UNIQUE
--- El prefijo y el ID garantizan la unicidad sin límites de dígitos.
+-- El prefijo y los primeros 8 chars del UUID encajan en el VARCHAR(20) perfectamente.
 UPDATE users 
-SET dni = 'TEMP_' || id, 
+SET dni = 'TEMP_' || SUBSTRING(id::TEXT, 1, 8), 
     full_name = COALESCE(full_name, 'Sistema Admin'), 
     membership_expiry_date = COALESCE(membership_expiry_date, NOW() + INTERVAL '10 years') 
 WHERE dni IS NULL;

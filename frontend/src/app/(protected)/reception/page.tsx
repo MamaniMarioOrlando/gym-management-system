@@ -1,4 +1,5 @@
 import { api } from "@/lib/api";
+import { logoutAction } from "@/app/actions/auth";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -19,12 +20,12 @@ async function UsersDataTable() {
   return (
     <div className="rounded-md border bg-white shadow-sm overflow-hidden">
       <Table>
-        <TableHeader className="bg-gray-50/50">
+        <TableHeader className="bg-gray-100 border-b-2 border-gray-200">
           <TableRow>
-            <TableHead className="w-[100px] font-semibold">ID</TableHead>
-            <TableHead className="font-semibold">Nombre Completo</TableHead>
-            <TableHead className="font-semibold">Correo Electrónico</TableHead>
-            <TableHead className="text-right font-semibold">Estado</TableHead>
+            <TableHead className="w-[100px] font-bold text-slate-900 uppercase tracking-wider text-xs">ID</TableHead>
+            <TableHead className="font-bold text-slate-900 uppercase tracking-wider text-xs">Nombre Completo</TableHead>
+            <TableHead className="font-bold text-slate-900 uppercase tracking-wider text-xs">Correo Electrónico</TableHead>
+            <TableHead className="text-right font-bold text-slate-900 uppercase tracking-wider text-xs">Estado</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -98,10 +99,12 @@ export default function ReceptionPage() {
                 Gym Access <span className="text-indigo-600">Control</span>
               </h1>
             </div>
-            <button className="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-md shadow-sm hover:bg-gray-50 hover:text-red-600 transition-all font-medium text-sm">
-              <LogOut className="w-4 h-4" />
-              Cerrar Sesión
-            </button>
+            <form action={logoutAction}>
+              <button type="submit" className="flex items-center gap-2 bg-white border border-gray-200 text-slate-800 px-4 py-2 rounded-md shadow-sm hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-all font-semibold text-sm">
+                <LogOut className="w-4 h-4" />
+                Cerrar Sesión
+              </button>
+            </form>
           </div>
         </div>
       </header>
