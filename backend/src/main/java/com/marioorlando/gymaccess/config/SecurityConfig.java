@@ -30,8 +30,8 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable()) // Deshabilitamos CSRF para JWT
             .authorizeHttpRequests(authz -> authz
-                // Permite acceso libre a Swagger UI y autenticación
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api/v1/auth/**").permitAll()
+                // Permite acceso libre a Swagger UI, autenticación y escáner de Kiosco público
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api/v1/auth/**", "/api/v1/access/**").permitAll()
                 // La API de usuarios ahora requiere autenticación
                 .anyRequest().authenticated()
             )

@@ -11,4 +11,7 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByEmail(String email);
     Optional<User> findByBiometricId(String biometricId);
+    
+    // Core Logic Phase 6
+    Optional<User> findByDni(String dni);
 }
