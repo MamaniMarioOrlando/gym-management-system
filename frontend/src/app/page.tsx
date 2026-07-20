@@ -67,17 +67,14 @@ export default function KioskPage() {
         
         {/* DEV TOOLBAR (Oculto a la vista, visible al pasar el mouse por la esquina superior izquierda) */}
         <div className="absolute -top-32 md:-top-48 -left-32 md:-left-48 z-50 bg-black/50 backdrop-blur-md p-3 rounded-lg border border-white/10 opacity-10 hover:opacity-100 transition-all duration-300">
-          <p className="text-white/70 text-[10px] uppercase font-bold mb-1 tracking-wider">Dev_Simulador_Hardware</p>
-          <select 
+          <p className="text-white/70 text-[10px] uppercase font-bold mb-1 tracking-wider">Dev_Simulador_Hardware (DNI)</p>
+          <input 
+            type="text"
             name="identifier" 
+            placeholder="Ingresa un DNI para emular..."
             defaultValue="TEMP_11111111" 
-            className="bg-black/50 text-white border border-white/20 text-xs rounded p-2 outline-none cursor-pointer"
-          >
-            <option value="TEMP_11111111">Mario Admin (Acceso OK)</option>
-            <option value="TEMP_22222222">Cliente Activo (Acceso OK)</option>
-            <option value="TEMP_33333333">Cliente Vencido (Denegado 403)</option>
-            <option value="99999999">Desconocido (Denegado 404)</option>
-          </select>
+            className="bg-black/50 text-white border border-white/20 text-xs rounded p-2 outline-none cursor-text w-full placeholder:text-white/40"
+          />
         </div>
 
         {/* ESTADO IDLE */}

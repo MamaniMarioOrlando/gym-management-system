@@ -4,10 +4,12 @@ import { cookies } from 'next/headers';
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api/v1';
 
 export interface UserDto {
-  id: number;
+  id: string;
   name: string;
   email: string;
+  dni?: string;
   role: string;
+  membershipExpiryDate?: string | null;
 }
 
 export const api = {

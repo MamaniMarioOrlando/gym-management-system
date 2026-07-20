@@ -1,5 +1,6 @@
 import { api } from "@/lib/api";
 import { logoutAction } from "@/app/actions/auth";
+import { CreateUserModal, RenewModal } from "./ClientModals";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -22,31 +23,45 @@ async function UsersDataTable() {
       <Table>
         <TableHeader className="bg-gray-100 border-b-2 border-gray-200">
           <TableRow>
-            <TableHead className="w-[100px] font-bold text-slate-900 uppercase tracking-wider text-xs">ID</TableHead>
+            <TableHead className="w-[120px] font-bold text-slate-900 uppercase tracking-wider text-xs">Documento/DNI</TableHead>
             <TableHead className="font-bold text-slate-900 uppercase tracking-wider text-xs">Nombre Completo</TableHead>
             <TableHead className="font-bold text-slate-900 uppercase tracking-wider text-xs">Correo Electrónico</TableHead>
-            <TableHead className="text-right font-bold text-slate-900 uppercase tracking-wider text-xs">Estado</TableHead>
+            <TableHead className="font-bold text-slate-900 uppercase tracking-wider text-xs">Vencimiento</TableHead>
+            <TableHead className="text-center font-bold text-slate-900 uppercase tracking-wider text-xs">Estado</TableHead>
+            <TableHead className="text-right font-bold text-slate-900 uppercase tracking-wider text-xs">Acción</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {users.map((user) => (
             <TableRow key={user.id} className="hover:bg-gray-50/50 transition-colors">
-              <TableCell className="font-medium text-gray-500">#{user.id}</TableCell>
-              <TableCell className="font-medium text-gray-900">{user.name}</TableCell>
-              <TableCell className="text-gray-500">{user.email}</TableCell>
-              <TableCell className="text-right">
+              <TableCell className="font-medium text-gray-500">{user.dni}</TableCell>
+              <TableCell className="font-bold text-gray-900">{user.name}</TableCell>
+              <TableCell className="text-gray-500 text-sm">{user.email}</TableCell>
+              <TableCell className="text-sm font-semibold text-gray-700">
+                {user.membershipExpiryDate 
+                  ? new Date(user.membershipExpiryDate).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }) 
+                  : '—'}
+              </TableCell>
+              <TableCell className="text-center">
                 <Badge 
                   variant={user.role === 'ADMIN' ? 'default' : 'secondary'}
-                  className={user.role === 'ADMIN' ? 'bg-indigo-600 hover:bg-indigo-700' : 'bg-emerald-500 hover:bg-emerald-600 text-white'}
+                  className={user.role === 'ADMIN' ? 'bg-indigo-600 hover:bg-indigo-700 mx-auto' : 'bg-emerald-500 hover:bg-emerald-600 text-white mx-auto'}
                 >
                   {user.role}
                 </Badge>
+              </TableCell>
+              <TableCell className="text-right">
+                {user.role !== 'ADMIN' && (
+                  <div className="flex justify-end">
+                    <RenewModal userId={String(user.id)} userName={user.name} />
+                  </div>
+                )}
               </TableCell>
             </TableRow>
           ))}
           {users.length === 0 && (
             <TableRow>
-              <TableCell colSpan={4} className="h-24 text-center text-gray-500">
+              <TableCell colSpan={6} className="h-24 text-center text-gray-500">
                 No hay usuarios registrados.
               </TableCell>
             </TableRow>
@@ -135,6 +150,8 @@ export default function ReceptionPage() {
               <h2 className="text-lg font-bold text-gray-900">Directorio de Usuarios</h2>
               <p className="text-sm text-gray-500 mt-1">Conectado en tiempo real con Spring Boot</p>
             </div>
+            
+            <CreateUserModal />
           </div>
           
           <Suspense fallback={<TableSkeleton />}>

@@ -16,8 +16,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -32,7 +35,9 @@ public class SecurityConfig {
             .authorizeHttpRequests(authz -> authz
                 // Permite acceso libre a Swagger UI, autenticación y escáner de Kiosco público
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api/v1/auth/**", "/api/v1/access/**").permitAll()
-                // La API de usuarios ahora requiere autenticación
+                // Proteger rutas administrativas temporalmente solo con JWT para depuración
+                // .requestMatchers("/api/v1/admin/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                // La API general requiere autenticación normal
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
