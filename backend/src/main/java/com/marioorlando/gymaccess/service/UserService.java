@@ -27,6 +27,7 @@ public class UserService {
                 .name(user.getName())
                 .email(user.getEmail())
                 .dni(user.getDni())
+                .membershipExpiryDate(user.getMembershipExpiryDate())
                 .role(user.getRole())
                 .build();
     }

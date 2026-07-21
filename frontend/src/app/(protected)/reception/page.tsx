@@ -1,5 +1,6 @@
 import { api } from "@/lib/api";
 import { logoutAction } from "@/app/actions/auth";
+import DashboardClient from "./DashboardClient";
 import { CreateUserModal, RenewModal } from "./ClientModals";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -125,39 +126,23 @@ export default function ReceptionPage() {
       </header>
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        {/* Metricas Rapidas */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex flex-col justify-center relative overflow-hidden group hover:border-indigo-100 transition-colors">
-            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-              <Users className="w-16 h-16 text-indigo-600" />
-            </div>
-            <p className="text-sm font-medium text-gray-500 mb-1">Miembros Activos</p>
-            <p className="text-3xl font-bold text-gray-900">Cargando...</p>
-          </div>
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 flex flex-col justify-center relative overflow-hidden group hover:border-emerald-100 transition-colors">
-            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-              <Activity className="w-16 h-16 text-emerald-600" />
-            </div>
-            <p className="text-sm font-medium text-gray-500 mb-1">Ingresos Hoy</p>
-            <p className="text-3xl font-bold text-gray-900">24</p>
-          </div>
-        </div>
-
-        {/* Tabla Dinámica Server-Side con Skeletons */}
-        <section className="mb-8">
-          <div className="flex justify-between items-end mb-4">
-            <div>
-              <h2 className="text-lg font-bold text-gray-900">Directorio de Usuarios</h2>
-              <p className="text-sm text-gray-500 mt-1">Conectado en tiempo real con Spring Boot</p>
+        <DashboardClient>
+          {/* Tabla Dinámica Server-Side con Skeletons */}
+          <section className="mb-8">
+            <div className="flex justify-between items-end mb-4">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">Directorio de Usuarios</h2>
+                <p className="text-sm text-gray-500 mt-1">Conectado en tiempo real con Spring Boot</p>
+              </div>
+              
+              <CreateUserModal />
             </div>
             
-            <CreateUserModal />
-          </div>
-          
-          <Suspense fallback={<TableSkeleton />}>
-            <UsersDataTable />
-          </Suspense>
-        </section>
+            <Suspense fallback={<TableSkeleton />}>
+              <UsersDataTable />
+            </Suspense>
+          </section>
+        </DashboardClient>
       </main>
     </div>
   );

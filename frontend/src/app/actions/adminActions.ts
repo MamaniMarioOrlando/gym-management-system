@@ -68,3 +68,22 @@ export async function renewMembershipAction(prevState: any, formData: FormData) 
     return { error: err.message };
   }
 }
+
+export async function getDashboardMetricsAction() {
+  const token = await getToken();
+  if (!token) throw new Error("No autenticado");
+
+  const res = await fetch(`${API_BASE_URL}/admin/dashboard/metrics`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    cache: 'no-store'
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch dashboard metrics: ${res.status}`);
+  }
+
+  return res.json();
+}

@@ -14,4 +14,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     
     // Core Logic Phase 6
     Optional<User> findByDni(String dni);
+
+    // Phase 8: Business Intelligence
+    long countByMembershipExpiryDateAfter(java.time.LocalDateTime date);
+    long countByMembershipExpiryDateBefore(java.time.LocalDateTime date);
 }

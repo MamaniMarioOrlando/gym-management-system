@@ -15,6 +15,7 @@ public class UserDto {
     private String name;
     private String email;
     private String dni;
+    private java.time.LocalDateTime membershipExpiryDate;
     // Note: No exponemos el biometricId deliberadamente al frontend público.
     private String role;
 }
