@@ -5,7 +5,7 @@ import com.marioorlando.gymaccess.dto.ScanRequest;
 import com.marioorlando.gymaccess.exception.CustomAccessDeniedException;
 import com.marioorlando.gymaccess.exception.ResourceNotFoundException;
 import com.marioorlando.gymaccess.model.User;
-import com.marioorlando.gymaccess.repository.UserRepository;
+import com.marioorlando.gymaccess.service.biometric.BiometricReader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
 @Service
 public class AccessService {
 
-    private final UserRepository userRepository;
+    private final BiometricReader biometricReader;
     private final AccessLogService logService;
 
-    public AccessService(UserRepository userRepository, AccessLogService logService) {
-        this.userRepository = userRepository;
+    public AccessService(BiometricReader biometricReader, AccessLogService logService) {
+        this.biometricReader = biometricReader;
         this.logService = logService;
     }
 
@@ -26,8 +26,8 @@ public class AccessService {
     public AccessResponse processAccess(ScanRequest request) {
         String identifier = request.getIdentifier();
 
-        // 1. Buscar Usuario
-        User user = userRepository.findByDni(identifier)
+        // 1. Buscar Usuario (Usando Strategy Pattern: PREPARACIÓN HARDWARE)
+        User user = biometricReader.findByIdentifier(identifier)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado en la base de datos"));
 
         // 2. Evaluar Membresía

@@ -10,10 +10,13 @@ export type ScanState = {
 };
 
 export async function scanAction(prevState: ScanState, formData: FormData): Promise<ScanState> {
-  // En un Totem real, este identifier vendría del lector USB/Serial
-  // Extraemos el valor inyectado por nuestro Simulador en el Frontend
-  const simulatorValue = formData.get('identifier')?.toString();
-  const identifier = simulatorValue || process.env.NEXT_PUBLIC_TEST_DNI || 'TEMP_11111111';  
+  // 1. Intentar obtener el identificador del formulario (PREPARACIÓN HARDWARE REAL)
+  let identifier = formData.get('identifier')?.toString()?.trim();
+  
+  // 2. Si no viene del formulario (fallback), usar la variable de entorno
+  if (!identifier) {
+    identifier = process.env.NEXT_PUBLIC_TEST_DNI || 'TEMP_11111111-1111-1111-1111-111111111111';
+  }
   
   try {
     const res = await fetch(`${API_BASE_URL}/access/scan`, {

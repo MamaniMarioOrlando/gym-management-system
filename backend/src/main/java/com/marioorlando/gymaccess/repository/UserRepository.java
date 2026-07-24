@@ -14,6 +14,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     
     // Core Logic Phase 6
     Optional<User> findByDni(String dni);
+    
+    // Core Logic Phase 9 - Hardware Biometric Reader
+    Optional<User> findByFingerprintHash(String fingerprintHash);
 
     // Phase 8: Business Intelligence
     long countByMembershipExpiryDateAfter(java.time.LocalDateTime date);
