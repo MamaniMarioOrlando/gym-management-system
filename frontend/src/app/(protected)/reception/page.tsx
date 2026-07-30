@@ -44,12 +44,22 @@ async function UsersDataTable() {
                   : '—'}
               </TableCell>
               <TableCell className="text-center">
-                <Badge 
-                  variant={user.role === 'ADMIN' ? 'default' : 'secondary'}
-                  className={user.role === 'ADMIN' ? 'bg-indigo-600 hover:bg-indigo-700 mx-auto' : 'bg-emerald-500 hover:bg-emerald-600 text-white mx-auto'}
-                >
-                  {user.role}
-                </Badge>
+                {user.role?.includes('ADMIN') ? (
+                  <Badge variant="default" className="bg-indigo-600 hover:bg-indigo-700 mx-auto">
+                    ADMIN
+                  </Badge>
+                ) : (
+                  <Badge 
+                    variant="secondary"
+                    className={
+                      (!user.membershipExpiryDate || new Date(user.membershipExpiryDate) < new Date())
+                        ? 'bg-red-500 hover:bg-red-600 text-white mx-auto flex items-center justify-center w-20'
+                        : 'bg-emerald-500 hover:bg-emerald-600 text-white mx-auto flex items-center justify-center w-20'
+                    }
+                  >
+                    {(!user.membershipExpiryDate || new Date(user.membershipExpiryDate) < new Date()) ? 'VENCIDO' : 'ACTIVO'}
+                  </Badge>
+                )}
               </TableCell>
               <TableCell className="text-right">
                 {user.role !== 'ADMIN' && (

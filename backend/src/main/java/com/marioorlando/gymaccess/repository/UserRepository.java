@@ -21,4 +21,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     // Phase 8: Business Intelligence
     long countByMembershipExpiryDateAfter(java.time.LocalDateTime date);
     long countByMembershipExpiryDateBefore(java.time.LocalDateTime date);
+
+    // Phase 10: Notification Scheduler Queries
+    // Usamos Between para atrapar rangos (P.ej. Socios que venzan entre Hoy y Dentro de 3 Días)
+    java.util.List<User> findByMembershipExpiryDateBetween(java.time.LocalDateTime start, java.time.LocalDateTime end);
 }

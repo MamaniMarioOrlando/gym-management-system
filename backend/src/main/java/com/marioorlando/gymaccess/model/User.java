@@ -54,4 +54,7 @@ public class User {
 
     @Column(length = 20)
     private String phone;
+
+    @Column(name = "last_reminder_sent_at")
+    private LocalDateTime lastReminderSentAt;
 }

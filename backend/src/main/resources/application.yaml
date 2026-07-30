@@ -1,6 +1,8 @@
 spring:
   application:
     name: gym-access-control
+  profiles:
+    active: dev
 
   datasource:
     url: jdbc:postgresql://localhost:5432/gym_access_db

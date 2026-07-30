@@ -1,0 +1,16 @@
+spring:
+  mail:
+    host: ${MAIL_HOST:sandbox.smtp.mailtrap.io}
+    port: ${MAIL_PORT:2525}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            
+# Tip Frontend: Definimos la URL local para el llamado a la acción (Renovar Ahora)
+gym:
+  frontend-url: "http://localhost:3000/reception"
